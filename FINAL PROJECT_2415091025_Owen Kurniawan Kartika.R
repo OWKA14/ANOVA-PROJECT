@@ -6,11 +6,11 @@ library(tidyverse)
 library(broom)
 library(AICcmodavg)
 
-# Load the data into R
+# Step 1: Load the data into R
 crop.data <- read.csv("C:/Users/Owen Kartika/Documents/R/Sample/crop.data.csv", header = TRUE, colClasses = c("factor", "factor", "factor", "numeric"))
 summary(crop.data)
 
-# Perform the ANOVA Test
+# Step 2: Perform the ANOVA Test
 # ONE-WAY ANOVA
 one.way <- aov(yield ~ fertilizer, data = crop.data)
 summary(one.way)
@@ -27,13 +27,13 @@ summary(interaction)
 blocking <- aov(yield ~ fertilizer + density + block, data = crop.data)
 summary(blocking)
 
-# Find the best fit models
+# Step 3: Find the best fit models
 library(AICcmodavg)
 model.set <- list(one.way, two.way, interaction, blocking)
 model.names <- c("one.way", "two.way", "interaction", "blocking")
 aictab(model.set, modnames = model.names)
 
-# Check for homoscedasticity
+# Step 4: Check for homoscedasticity
 par(mfrow=c(2,2))
 plot(two.way)
 par(mfrow=c(1,1))
